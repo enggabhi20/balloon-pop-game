@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balloon Pop Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: skyblue;
+      font-family: Arial, sans-serif;
+    }
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 60px;
+      height: 80px;
+      background: red;
+      border-radius: 50% 50% 50% 50%;
+      cursor: pointer;
+      box-shadow: inset -5px -5px rgba(0,0,0,0.2);
+    }
+    #scoreboard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      background: rgba(255,255,255,0.7);
+      padding: 10px;
+      border-radius: 10px;
+    }
+    #names {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      background: rgba(255,255,255,0.7);
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="scoreboard">Score: 0</div>
+  <div id="names">Ansh & Ashvi</div>
+  <script>
+    let score = 0;
+
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      const left = Math.random() * window.innerWidth;
+      balloon.style.left = `${left}px`;
+      balloon.style.backgroundColor = getRandomColor();
+
+      balloon.addEventListener('click', () => {
+        score++;
+        document.getElementById('scoreboard').textContent = `Score: ${score}`;
+        balloon.remove();
+      });
+
+      document.body.appendChild(balloon);
+
+      let y = -100;
+      const speed = 1 + Math.random() * 2;
+      const interval = setInterval(() => {
+        y += speed;
+        balloon.style.bottom = `${y}px`;
+        if (y > window.innerHeight) {
+          balloon.remove();n
+          clearInterval(interval);
+        }
+      }, 16);
+    }
+
+    function getRandomColor() {
+      const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    setInterval(createBalloon, 800);
+  </script>
+</body>
+</html>
